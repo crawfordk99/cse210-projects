@@ -8,6 +8,9 @@ public class Activity {
     public Activity () {
 
     }
+    public Activity(int duration) {
+
+    }
     public Activity (string activity, string description, int duration) {
         _activity = activity;
         _description = description;
@@ -17,4 +20,18 @@ public class Activity {
         return _description;
     }
 
+ 
+    public string[] DisplayAnimations() {
+        List<string> animations = new List<string>();
+        animations.Add("/");
+        animations.Add("-");
+        animations.Add("\\");
+        animations.Add("|");
+        animations.Add("/");
+        animations.Add("-");
+        animations.Add("\\");
+        animations.Add("|");
+        string[] animationStrings = animations.ToArray();
+        return animationStrings;
+    }
 }
