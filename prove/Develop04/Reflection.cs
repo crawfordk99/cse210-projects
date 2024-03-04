@@ -60,6 +60,7 @@ public class Reflection : Activity {
         DateTime endTime = startTime.AddSeconds(GetSpinner());
         string prompt = GetRandomPrompt();
         Console.WriteLine(prompt);
+        Thread.Sleep(2000);
         while (DateTime.Now < endTime) {
             string reflection = GetRandomReflection(); 
             Console.WriteLine(reflection);

@@ -21,6 +21,7 @@ public class Breathing : Activity {
     public void DisplayMessage() {
         DateTime startTime = DateTime.Now;
         DateTime endTime = startTime.AddSeconds(GetTimer());
+        Thread.Sleep(5000);
         while (DateTime.Now < endTime) {
             
             Console.WriteLine("Breathe in... ");
