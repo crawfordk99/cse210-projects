@@ -2,7 +2,7 @@ public class Eternal : Goals {
    
     public Eternal() {}
 
-    public Eternal(string goal, int points, int benchmark, int extra) : base(goal, points, benchmark, extra){
+    public Eternal(int completions, string goal, int points, int benchmark, int extra) : base(completions, goal, points, benchmark, extra){
         
     }
 
@@ -25,7 +25,7 @@ public class Eternal : Goals {
         if (fileName != string.Empty ) {
             string[] oldContent = File.ReadAllLines(fileName);
             File.WriteAllText(fileName, string.Empty);
-            firstLine =$"Total Points: {base.GetPoints()}, eternal, {base.GetBonus()}, {base.GetBenchMark()}, {base.GetGoal()}";
+            firstLine =$"Times Completed: {base.GetTimesCompleted()}, Total Points: {base.GetPoints()}, eternal, {base.GetBonus()}, {base.GetBenchMark()}, {base.GetGoal()}";
             using (StreamWriter fileOutPut = new StreamWriter(fileName)) {
                 fileOutPut.WriteLine(firstLine);
                 foreach (string line in oldContent) {

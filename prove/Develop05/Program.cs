@@ -23,10 +23,11 @@ class Program
         int userTotalPoints = 0;
         int pointsBenchmark = 0;
         int benchmarkBonus = 0;
+        int timesCompleted = 0;
         bool continueLoop = true;
         while (continueLoop) {
             Console.WriteLine();
-            Console.WriteLine($"Total Points From Goals: {userTotalPoints}");
+            Console.WriteLine($"Total Points From Goals Today: {userTotalPoints}");
             Console.WriteLine("Please choose a number from the menu.\n" +
             "1. Set new goal\n" +
             "2. Update previous goals\n" +
@@ -52,7 +53,7 @@ class Program
                             Console.WriteLine("Please enter desired points bonus for reaching benchmark.");
                             benchmarkBonus = int.Parse(Console.ReadLine());
                             Console.WriteLine();
-                            simple = new Simple(goal, totalPoints, pointsBenchmark, benchmarkBonus);
+                            simple = new Simple(timesCompleted, goal, totalPoints, pointsBenchmark, benchmarkBonus);
                             simple.GoalsToFile();
                             string[] snewGoal = File.ReadAllLines(fileName);
                             goals.Add(snewGoal[0]);
@@ -65,7 +66,7 @@ class Program
                             Console.WriteLine("Please enter desired points bonus for reaching benchmark.");
                             Console.WriteLine("");
                             benchmarkBonus = int.Parse(Console.ReadLine());
-                            eternal = new Eternal(goal, totalPoints, pointsBenchmark, benchmarkBonus);
+                            eternal = new Eternal(timesCompleted, goal, totalPoints, pointsBenchmark, benchmarkBonus);
                             eternal.GoalsToFile();
                             string [] enewGoal = File.ReadAllLines(fileName);
                             goals.Add(enewGoal[0]);
@@ -99,27 +100,33 @@ class Program
                         if (line.Trim() != "") {
                             string[] parts= line.Split(",");
                             string[] parts2 =parts[0].Split(" ");
-                            totalPoints = int.Parse(parts2[2]);
-                            type = parts[1];
-                            goal = parts[4];
-                            pointsBenchmark = int.Parse(parts[3]);
-                            benchmarkBonus = int.Parse(parts[2]);
+                            timesCompleted = int.Parse(parts2[2]);
+                            string[] parts3 = parts[1].Split(" ");
+                            totalPoints = int.Parse(parts3[3]);
+                            type = parts[2];
+                            goal = parts[5];
+                            pointsBenchmark = int.Parse(parts[4]);
+                            benchmarkBonus = int.Parse(parts[3]);
                             if (type.IndexOf("simple") != -1) {
+                                timesCompleted++;
                                 totalPoints += simple.RewardPoints();
                                 userTotalPoints += totalPoints;
-                                simple = new Simple(goal, totalPoints, pointsBenchmark, benchmarkBonus);
-                                parts[0] = ($"Total Points: {totalPoints},");
+                                simple = new Simple(timesCompleted, goal, totalPoints, pointsBenchmark, benchmarkBonus);
+                                parts[0] = ($"Times Completed: {timesCompleted},");
+                                parts[1] = ($" Total Points: {totalPoints},");
                                 goals[i] = "";
-                                goals[i] = ($"{parts[0]}{parts[1]},{parts[2]},{parts[3]},{parts[4]}");
+                                goals[i] = ($"{parts[0]}{parts[1]}{parts[2]},{parts[3]},{parts[4]},{parts[5]}");
                                 Console.WriteLine("");
                             }
                             else if (type.IndexOf("eternal") != -1) {
+                                timesCompleted++;
                                 totalPoints += eternal.RewardPoints();
                                 userTotalPoints += totalPoints;
-                                eternal = new Eternal(goal, totalPoints, pointsBenchmark, benchmarkBonus); 
-                                parts[0] = ($"Total Points: {totalPoints},");
+                                eternal = new Eternal(timesCompleted, goal, totalPoints, pointsBenchmark, benchmarkBonus); 
+                                parts[0] = ($"Times Completed: {timesCompleted},");
+                                parts[1] = ($" Total Points: {totalPoints},");
                                 goals[i] = "";
-                                goals[i] = ($"{parts[0]}{parts[1]},{parts[2]},{parts[3]},{parts[4]}");
+                                goals[i] = ($"{parts[0]}{parts[1]}{parts[2]},{parts[3]},{parts[4]},{parts[5]}");
                                 Console.WriteLine("");
                             }
                             else {
@@ -148,14 +155,6 @@ class Program
                 case "4":
                     File.WriteAllText(fileName, string.Empty);
                     Console.WriteLine();
-                    Console.WriteLine("Do you want to reset your total points too? Enter yes or no.");
-                    string input = Console.ReadLine();
-                    if (input == "yes") {
-                        userTotalPoints = 0;
-                    }
-                    else if (input == "no") {
-                        break;
-                    }
                     break;
                 case "5":
                     continueLoop = false;

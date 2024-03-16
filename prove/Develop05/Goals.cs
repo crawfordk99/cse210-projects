@@ -1,4 +1,5 @@
 public abstract class Goals {
+    private int _timesCompleted;
     private string _goal;
     private int _points;
     private int _benchmark;
@@ -6,7 +7,8 @@ public abstract class Goals {
 
     public Goals() {}
 
-    public Goals(string goal, int points, int benchmark, int extra) {
+    public Goals(int completions, string goal, int points, int benchmark, int extra) {
+        _timesCompleted = completions;
         _goal = goal;
         _points = points;
         _benchmark = benchmark;
@@ -16,6 +18,10 @@ public abstract class Goals {
     public abstract void GoalsToFile();
 
     public abstract int RewardPoints();
+
+    public int GetTimesCompleted() {
+        return _timesCompleted;
+    }
 
     public string GetGoal() {
         return _goal;
